@@ -12,8 +12,10 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^11.1.5",
     "@tabler/core": "^1.5.1",
-    "astro": "^7.3.2"
+    "astro": "^7.3.2",
+    "dotenv": "^17.4.2"
   },
   "allowScripts": {
     "esbuild": true

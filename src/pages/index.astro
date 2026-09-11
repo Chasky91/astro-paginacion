@@ -1,11 +1,100 @@
 ---
+
+import '@tabler/core/dist/css/tabler.min.css'
+
 import  BaseLayout  from "./layouts/BaseLayout.astro";
-const  titulo = "Incio"
+const  titulo = "Incio  xd"
+
+import { getUsuarios } from '../lib/usuarios.mjs';
+
+export const prerender = false;
+
+const producto = await getUsuarios(Astro.params.id!);
+if (!producto) return Astro.rewrite("/404");
+
+Astro.cache.set({ maxAge: 120, swr: 60, tags: ["productos"] });
 ---
 
 <BaseLayout titulo= {titulo}>	
 
 	<body>
-		<h1>Astro Pagina de inicio</h1>
+		<div class="page">
+			<header class="navbar navbar-expand-sm d-print-none">
+				<div class="container-xl">
+				<h1 class="navbar-brand navbar-brand-autodark pe-0 pe-md-3">
+					<a href="#">
+					<img src="/static/logo.svg" width="110" height="32" alt="Tabler" class="navbar-brand-image" />
+					</a>
+				</h1>
+				<div class="navbar-nav flex-row order-md-last">
+					<div class="nav-item">
+					<a href="#" class="nav-link d-flex lh-1 text-reset p-0">
+						<span class="avatar avatar-sm" style="background-image: url(/static/avatars/002m.jpg)"></span>
+						<div class="d-none d-xl-block ps-2">
+						<div>Paweł Kuna</div>
+						<div class="mt-1 small text-secondary">UI Designer</div>
+						</div>
+					</a>
+					</div>
+				</div>
+				</div>
+			</header>
+			<div class="page-wrapper">
+				<main class="page-body">
+				<div class="container-xl">
+					<div class="row row-deck row-cards">
+					
+					<div class="col-12">
+						<table class="table table-responsive">
+							<thead>
+								<tr>
+								<th>#</th>
+								<th class="text-nowrap">Heading 1</th>
+								<th class="text-nowrap">Heading 2</th>
+								<th class="text-nowrap">Heading 3</th>
+								<th class="text-nowrap">Heading 4</th>
+								<th class="text-nowrap">Heading 5</th>
+								<th class="text-nowrap">Heading 6</th>
+								<th class="text-nowrap">Heading 7</th>
+								<th class="text-nowrap">Heading 8</th>
+								<th class="text-nowrap">Heading 9</th>
+								<th class="text-nowrap">Heading 10</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+								<th>1</th>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								</tr>
+								<tr>
+								<th>2</th>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								<td>Cell</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					</div>
+				</div>
+				</main>
+			</div>
+			</div>
 	</body>
 </BaseLayout>
