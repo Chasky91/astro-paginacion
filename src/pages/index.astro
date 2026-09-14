@@ -9,10 +9,13 @@ import { getUsuarios } from '../lib/usuarios.mjs';
 
 export const prerender = false;
 
-const producto = await getUsuarios(Astro.params.id!);
-if (!producto) return Astro.rewrite("/404");
+const usuarios = await getUsuarios()
 
-Astro.cache.set({ maxAge: 120, swr: 60, tags: ["productos"] });
+console.log(usuarios)
+if (!usuarios) return Astro.rewrite("/404")
+
+
+Astro.cache.set({ maxAge: 120, swr: 60, tags: ["usuarios"] });
 ---
 
 <BaseLayout titulo= {titulo}>	
