@@ -1,21 +1,18 @@
 ---
 
 import '@tabler/core/dist/css/tabler.min.css'
+import  BaseLayout  from "./layouts/BaseLayout.astro"
+import { getUsuarios } from '../lib/usuarios.mjs'
 
-import  BaseLayout  from "./layouts/BaseLayout.astro";
+const  paginaParametro = Number(Astro.url.searchParams.get("page") ?? 1)
+const  pagina = Number.isInteger(paginaParametro) && paginaParametro > 0 ? paginaParametro : 1
+const limit = 3
 const  titulo = "Incio  xd"
+const {result: usuarios, currentPage, totalItems, totalPages} = await getUsuarios(pagina,limit)
 
-import { getUsuarios } from '../lib/usuarios.mjs';
-
-export const prerender = false;
-
-const usuarios = await getUsuarios()
-
-console.log(usuarios)
 if (!usuarios) return Astro.rewrite("/404")
 
 
-Astro.cache.set({ maxAge: 120, swr: 60, tags: ["usuarios"] });
 ---
 
 <BaseLayout titulo= {titulo}>	
@@ -51,48 +48,41 @@ Astro.cache.set({ maxAge: 120, swr: 60, tags: ["usuarios"] });
 						<table class="table table-responsive">
 							<thead>
 								<tr>
-								<th>#</th>
-								<th class="text-nowrap">Heading 1</th>
-								<th class="text-nowrap">Heading 2</th>
-								<th class="text-nowrap">Heading 3</th>
-								<th class="text-nowrap">Heading 4</th>
-								<th class="text-nowrap">Heading 5</th>
-								<th class="text-nowrap">Heading 6</th>
-								<th class="text-nowrap">Heading 7</th>
-								<th class="text-nowrap">Heading 8</th>
-								<th class="text-nowrap">Heading 9</th>
-								<th class="text-nowrap">Heading 10</th>
+									<th>#ID </th>
+									<th class="text-nowrap">Nombre</th>
+									<th class="text-nowrap">Email</th>
+									<th class="text-nowrap">Dado de alta</th>
+									<th class="text-nowrap">Actualizado</th>
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-								<th>1</th>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								</tr>
-								<tr>
-								<th>2</th>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								<td>Cell</td>
-								</tr>
+								{
+									usuarios.map((usuario) =>(
+										<tr>
+											<th>{usuario.id}</th>
+											<td>{usuario.name}</td>
+											<td>{usuario.email}</td>
+											<td>{usuario.created_at}</td>
+											<td>{usuario.updated_at}</td>
+										</tr>
+								))}
+
+
 							</tbody>
 						</table>
+						<nav>
+							{
+								pagina > 1 &&(
+									<a href={`?page=${pagina-1}`}> Anterior</a>
+							)}
+							<span>
+								Página {currentPage} de {totalPages}
+							</span>
+							{
+								pagina < totalPages &&(
+									<a href={`?page=${pagina+1}&limit=${limit+1}`}> Siguiente</a>
+							)}
+						</nav>
 					</div>
 					</div>
 				</div>
