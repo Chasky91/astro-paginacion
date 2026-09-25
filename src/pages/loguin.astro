@@ -1,0 +1,48 @@
+---
+import BaseLayout from './layouts/BaseLayout.astro'
+import { login } from '../lib/usuarios.mjs'
+
+const titulo = "Login"
+let  error = ''
+
+if (Astro.request.method=== 'POST'){
+    const formulario = await Astro.request.formData()
+    const email = formulario.get("email")   
+    const password = formulario.get("password")
+
+    try{
+        const respuesta = await login(email, password)
+        if(respuesta) {
+            return Astro.redirect("/")
+        } else {
+            error = "Usuario o contraseña incorrectos"
+        }
+    } catch (e){
+        console.log(e)
+        error = e.message
+    }
+    
+}
+---
+
+<BaseLayout title={titulo}>
+    <div class="page-wrapper">
+		<main class="page-body">
+            <form method="POST">
+                <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="text" class="form-control" name="email" placeholder="Email"/>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                </div>
+                <div class="form-footer">
+                    <button type="submit" class="btn btn-primary w-100">Iniciar sesion</button>
+                </div>
+            </form>
+            {error && <p style="color:red">{error}</p>}
+            
+        </main>
+    </div>
+</BaseLayout>
