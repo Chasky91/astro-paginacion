@@ -3,7 +3,7 @@ import BaseLayout from './layouts/BaseLayout.astro'
 import { login } from '../lib/usuarios.mjs'
 
 const titulo = "Login"
-let  error = ''
+let  error = null
 
 if (Astro.request.method=== 'POST'){
     const formulario = await Astro.request.formData()

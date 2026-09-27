@@ -1,0 +1,14 @@
+---
+import BaseLayout from './layouts/BaseLayout.astro'
+import RegistroForm from '../components/RegistroForm.vue'
+const titulo = "Login"
+---
+
+<BaseLayout title={titulo}>
+    <div class="page-wrapper">
+		<main class="page-body">
+            <RegistroForm client:load />
+            
+        </main>
+    </div>
+</BaseLayout>
