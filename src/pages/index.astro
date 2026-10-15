@@ -9,6 +9,7 @@ const  pagina = Number.isInteger(paginaParametro) && paginaParametro > 0 ? pagin
 const limit = 3
 const  titulo = "Incio  xd"
 const {result: usuarios, currentPage, totalItems, totalPages} = await getUsuarios(pagina,limit)
+console.log(usuarios)
 
 if (!usuarios) return Astro.rewrite("/404")
 
