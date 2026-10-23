@@ -54,7 +54,7 @@ if (!usuarios) return Astro.rewrite("/404")
 							</span>
 							{
 								pagina < totalPages &&(
-									<a href={`?page=${pagina+1}&limit=${limit+1}`}> Siguiente</a>
+									<a href={`?page=${pagina+1}`}> Siguiente</a>
 							)}
 						</nav>
 					
